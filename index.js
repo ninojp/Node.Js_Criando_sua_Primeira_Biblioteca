@@ -15,17 +15,28 @@ function trataErro(erro){
     console.log(erro);
     throw new Error(chalk.red(erro.code, 'Arquivo não encontrado!'));
 }
-// CÓDIGO ASSÍNCRONO
-function pegaArquivo(caminhoDoArquivo){
-    const encoding = 'utf-8';
-    fs.promises
-    .readFile(caminhoDoArquivo, encoding)
-    .then((texto) => console.log(chalk.green(texto)))
-    // .catch((erro) => trataErro(erro)) //ou como escrito abaixo
-    .catch(trataErro) 
-} 
+// CÓDIGO ASSÍNCRONO (usando .then())
+// function pegaArquivo(caminhoDoArquivo){
+//     const encoding = 'utf-8';
+//     fs.promises
+//     .readFile(caminhoDoArquivo, encoding)
+//     .then((texto) => console.log(chalk.green(texto)))
+//     // .catch((erro) => trataErro(erro)) //ou como escrito abaixo
+//     .catch(trataErro) 
+// } 
 
-// CÓDIGO SÍNCRONO
+// CÓDIGO ASSÍNCRONO (usando async/await)
+async function pegaArquivo(caminhoDoArquivo){
+    try {
+        const encoding = 'utf-8';
+        const textoResult = await fs.promises.readFile(caminhoDoArquivo, encoding)
+        console.log(chalk.green(textoResult));
+    } catch (erro) {
+        trataErro(erro)
+    }
+}
+
+// CÓDIGO SÍNCRONO (Não trabalha com Promessas)
 // function pegaArquivo(caminhoDoArquivo){
 //     const encoding = 'utf-8';
 //     fs.readFile(caminhoDoArquivo, encoding, (erro, texto) =>{
@@ -35,7 +46,8 @@ function pegaArquivo(caminhoDoArquivo){
 //         console.log(chalk.green(texto));
 //     })
 // }
-pegaArquivo('./arquivos/');
-// pegaArquivo('./arquivos/86 Eighty Six.txt');
+pegaArquivo('./arquivos/texto.md');
+// pegaArquivo('./arquivos/'); // Erro
+// pegaArquivo('./arquivos/86 Eighty Six.txt'); // Meu teste com TXT
 
 
