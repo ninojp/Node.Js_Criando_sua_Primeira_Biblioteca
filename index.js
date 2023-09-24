@@ -1,3 +1,4 @@
+import fs from 'fs';
 import chalk from 'chalk';
 // Sempre que vamos trabalhar com um projeto em Node.js do zero, uma das primeiras coisas que fazemos
 //é criar um arquivo package.json utilizando o comando npm init ou yarn init; assim como para todas as
@@ -10,6 +11,31 @@ import chalk from 'chalk';
 //foi instalado através da pasta node_modules, e globalmente, sendo instalados em um diretório geral do NPM e 
 //ficando disponíveis para todos os projetos em seu computador, sem a necessidade de instalar separadamente em cada projeto.
 
-console.log(chalk.green('ola mundo'));
-console.log('São geralmente recuperados a partir de um objeto [FileList] (https://developer.mozilla.org/pt-BR/docs/Web/API/FileList) que é retornado como resultado da seleção, pelo usuário, de arquivos através do elemento [<input>](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/Input), a partir do objeto [DataTransfer](https://developer.mozilla.org/pt-BR/docs/Web/API/');
-console.log('São geralmente recuperados a partir de um objeto [FileList] (https://developer.mozilla.org/pt-BR/docs/Web/API/FileList) que é retornado como resultado da seleção, pelo usuário, de arquivos através do elemento [<input>](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/Input), a partir do objeto [DataTransfer](https://developer.mozilla.org/pt-BR/docs/Web/API/');
+function trataErro(erro){
+    console.log(erro);
+    throw new Error(chalk.red(erro.code, 'Arquivo não encontrado!'));
+}
+// CÓDIGO ASSÍNCRONO
+function pegaArquivo(caminhoDoArquivo){
+    const encoding = 'utf-8';
+    fs.promises
+    .readFile(caminhoDoArquivo, encoding)
+    .then((texto) => console.log(chalk.green(texto)))
+    // .catch((erro) => trataErro(erro)) //ou como escrito abaixo
+    .catch(trataErro) 
+} 
+
+// CÓDIGO SÍNCRONO
+// function pegaArquivo(caminhoDoArquivo){
+//     const encoding = 'utf-8';
+//     fs.readFile(caminhoDoArquivo, encoding, (erro, texto) =>{
+//         if(erro){
+//             trataErro(erro);
+//         }
+//         console.log(chalk.green(texto));
+//     })
+// }
+pegaArquivo('./arquivos/');
+// pegaArquivo('./arquivos/86 Eighty Six.txt');
+
+
