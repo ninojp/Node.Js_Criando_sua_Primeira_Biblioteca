@@ -1,11 +1,47 @@
 import fs from 'fs';
 import chalk from 'chalk';
+// Sempre que vamos trabalhar com um projeto em Node.js do zero, uma das primeiras coisas que fazemos
+//é criar um arquivo package.json utilizando o comando npm init ou yarn init; assim como para todas as
+//instalações de libs externas utilizamos o comando npm install <nome do pacote> ou yarn add <nome do pacote>.
+// Para fazer uma instalação global de pacotes, utilizamos os comandos npm install -g <nome do pacote>
+//ou yarn add global <nome do pacote>. A recomendação é que a instalação de pacotes seja feita sempre localmente (sem o -g) 
+//e que a instalação global só seja feita em casos específicos 
+
+// Estes pacotes de código podem ser instalados localmente, estando disponíveis somente para o projeto no qual
+//foi instalado através da pasta node_modules, e globalmente, sendo instalados em um diretório geral do NPM e 
+//ficando disponíveis para todos os projetos em seu computador, sem a necessidade de instalar separadamente em cada projeto.
+//---------------------------------------------------------------------------------------------------
+
+// CÓDIGO SÍNCRONO (Não trabalha com Promessas)
+// function pegaArquivo(caminhoDoArquivo){
+//     const encoding = 'utf-8';
+//     fs.readFile(caminhoDoArquivo, encoding, (erro, texto) =>{
+//         if(erro){
+//             trataErro(erro);
+//         }
+//         console.log(chalk.green(texto));
+//     })
+// }
+//==============================================================================================
+
 // Além do .then() e do async/await, o JavaScript também tem 
 //um método construtor para resolver promessas, o Promise().
 // Enquanto .then() e async/await são utilizados quando temos 
 //que lidar com promessas já existentes - por exemplo, ao executarmos o método fetch()
 //que, por definição, sempre retorna uma promessa, usamos o construtor Promise()
 //para escrever do zero nossas próprias promessas.
+//---------------------------------------------------------------------------------------------
+
+// CÓDIGO ASSÍNCRONO (usando .then())
+function pegaArquivo(caminhoDoArquivo){
+    const encoding = 'utf-8';
+    fs.promises
+    .readFile(caminhoDoArquivo, encoding)
+    .then((texto) => console.log(chalk.green(texto)))
+    // .catch((erro) => trataErro(erro)) //ou como escrito abaixo
+    .catch(trataErro) 
+} 
+//==============================================================================================
 
 // Vamos ver um exemplo de função que recebe um valor booleano (true ou false)
 //e com base nesse valor retorna uma new Promise() rejeitada ou completa.
@@ -24,6 +60,7 @@ console.log(textoResult);
 promessa(true)
 .then((texto) => exibeResposta(texto)) // sucesso na promessa
 // Assim, concluímos que sempre temos que ter em mente os estados possíveis de qualquer promessa em JavaScript:
+//==============================================================================================
 
 // 1 - Promessas podem ser concluídas de duas formas: fulfilled (realizada, completa)
 //ou rejected (rejeitada), o que equivale a duas situações possíveis, 
@@ -59,3 +96,5 @@ async function pegaArquivo(caminhoDoArquivo) {
 }
 pegaArquivo('./arquivos/texto.md');
 pegaArquivo('./arquivos/');
+// pegaArquivo('./arquivos/Exemplo_texto.txt'); // Meu teste com TXT
+//==============================================================================================
