@@ -98,3 +98,4 @@ pegaArquivo('./arquivos/texto.md');
 pegaArquivo('./arquivos/');
 // pegaArquivo('./arquivos/Exemplo_texto.txt'); // Meu teste com TXT
 //==============================================================================================
+
