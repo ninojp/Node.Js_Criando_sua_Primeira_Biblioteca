@@ -7,8 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cli": "node ./src/cli.js ./arquivos/texto.md",
+    "cli2": "node ./src/cli.js",
     "cli:valida": "node ./src/cli.js ./arquivos/texto.md --valida",
-    "cli:Tst": "node ./src/cli.js ./arquivos/Exemplo_texto.txt --valida"
+    "cli:Tudo": "node ./src/cli.js ./arquivos/ --valida"
   },
   "repository": {
     "type": "git",
